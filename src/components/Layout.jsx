@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { Toaster } from 'react-hot-toast';
 import { Wrapper, Nav, Link } from "./Layout.styled";
 
 export const Layout = () => {
@@ -10,6 +11,7 @@ export const Layout = () => {
         <Link to="/list">List</Link>
       </Nav>
       <Outlet />
+      <Toaster />
     </Wrapper>
    )
 };

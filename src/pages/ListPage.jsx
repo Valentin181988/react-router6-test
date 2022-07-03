@@ -6,6 +6,7 @@ import { Loader } from '../components/Loader';
 const useFetchItems = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         async function fetchItems() {
@@ -14,7 +15,7 @@ const useFetchItems = () => {
                 const items = await getPublications();
                 setItems(items);
             } catch (error) {
-                console.log('fetchError', error);
+                setError(error);
             } finally {
                 setLoading(false);
             }
@@ -28,20 +29,21 @@ const useFetchItems = () => {
 
 export const ListPage = () => {
 
-    const { items, loading } = useFetchItems();
+    const { items, loading, error } = useFetchItems();
     
 
     return(
         <main>
             <h1>List Page</h1>
             {loading && <Loader />}
-            <ol>
+
+            {!error && (<ol>
               {items.map(item => (
                  <li key={item.id}>
                     <Link to={`/list/${item.id}`}>{item.title}</Link>
                 </li> 
               ))} 
-            </ol>     
+            </ol>)}           
         </main>
     );
 };

@@ -7,6 +7,11 @@ export const getPublications = async () => {
     return response.data;
 };
 
+export const getPublicationsById = async (id) => {
+    const response = await axios.get(`/articles/${id}`);
+    return response.data;
+};
+
 export const addPublication = async data => {
     const response = await axios.post('/articles', data);
     return response.data;
