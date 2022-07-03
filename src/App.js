@@ -9,6 +9,7 @@ function App() {
       <Route path="/" element={<Layout />}>
          <Route path="preview" element={<div>Preview page</div>}/>
          <Route path="list" element={<ListPage />}/>
+         <Route path="list/:itemId" element={<div>Single page</div>}/>
          <Route path="create" element={<div>Create page</div>}/>
       </Route>
     </Routes>
