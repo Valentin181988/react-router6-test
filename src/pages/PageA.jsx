@@ -1,5 +1,23 @@
+import { Link, useSearchParams, useLocation } from "react-router-dom";
+
 export const PageA = () => {
+    const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        setSearchParams({qery: e.currentTarget.elements.qery.value});
+       };
+
     return (
-        <div>Page A</div>
+        <div>
+           <Link to="/page-b" state={{ from: location }}>To page B</Link>
+           <hr />
+           <form onSubmit={handleSubmit}>
+             <input type="text" name="qery" autoComplete="off"/>
+             <button type="submit">Set qery</button>
+           </form> 
+        </div>
     );
 };
