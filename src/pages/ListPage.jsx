@@ -1,6 +1,4 @@
-import {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
-import {getPublications} from '../servises/publicationsApi';
 import { Loader } from '../components/Loader';
 import { useFetchItems } from '../hooks';
 
