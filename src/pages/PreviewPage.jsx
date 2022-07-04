@@ -1,19 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Controls } from '../components/Controls';
 import { Progress } from '../components/Progress';
 import { Publication } from '../components/Publication';
 import { useFetchItems } from '../hooks';
 
 export const PreviewPage = () => {
-    const [index, setIndex] = useState(0);
+    const [searchParams, setSearchParams] = useSearchParams();
     const {items, loading} = useFetchItems();
+    const currentItemPos = Number(searchParams.get('item'));
 
     const changeIndex = value => {
-        setIndex(prevIndex => prevIndex + value);
+        setSearchParams({ item: currentItemPos + value});
     };
 
+    useEffect(() => {
+        if(!currentItemPos) {
+            console.log('No item in url');
+            setSearchParams({ item: 1});
+        }
+    }, [currentItemPos, setSearchParams]);
+
     const totalItems = items.length;
-    const currentItem = items[index];
+    const currentItem = items[currentItemPos - 1];
     const showPlaceholder = !loading && totalItems === 0;
     const showReaderUI = !loading && totalItems > 0;
 
@@ -24,11 +33,11 @@ export const PreviewPage = () => {
             {showReaderUI && (
                 <>
                   <Controls 
-                     current={index + 1}
+                     current={currentItemPos}
                      total={totalItems}
                      onChange={changeIndex}
                   />
-                  <Progress current={index + 1} total={totalItems}/>
+                  <Progress current={currentItemPos} total={totalItems}/>
                   {currentItem && <Publication item={currentItem }/>}
                 </>
             )}
